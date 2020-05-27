@@ -1,0 +1,32 @@
+package com.example.demo.dao;
+
+import com.example.demo.po.Course;
+import com.example.demo.po.CourseExample;
+import org.apache.ibatis.annotations.Param;
+
+
+import java.util.List;
+
+public interface CourseDao {
+    int countByExample(CourseExample example);
+
+    int deleteByExample(CourseExample example);
+
+    int deleteByPrimaryKey(Integer courseid);
+
+    int insert(Course record);
+
+    int insertSelective(Course record);
+
+    List<Course> selectByExample(CourseExample example);
+
+    Course selectByPrimaryKey(Integer courseid);
+
+    int updateByExampleSelective(@Param("record") Course record, @Param("example") CourseExample example);
+
+    int updateByExample(@Param("record") Course record, @Param("example") CourseExample example);
+
+    int updateByPrimaryKeySelective(Course record);
+
+    int updateByPrimaryKey(Course record);
+}

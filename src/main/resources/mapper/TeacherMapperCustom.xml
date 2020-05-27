@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<!--teacherMapper-->
+
+<mapper namespace="com.example.demo.dao.TeacherDaoCustom">
+    <select id="findByPaging" parameterType="com.example.demo.po.PagingVO" resultType="com.example.demo.po.TeacherCustom">
+        select teacher.*, college.collegeName
+        from teacher, college
+        WHERE teacher.collegeID = college.collegeID
+        ORDER BY teacher.userID
+        limit #{toPageNo}, #{pageSize}
+    </select>
+</mapper>
