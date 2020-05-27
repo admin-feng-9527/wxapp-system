@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.example.demo.dao.UserloginDao" >
-  <resultMap id="BaseResultMap" type="com.example.demo.po.Userlogin" >
+<mapper namespace="com.example.demo.mapper.StudentMapper" >
+  <resultMap id="BaseResultMap" type="com.example.demo.po.Student" >
     <id column="userID" property="userid" jdbcType="INTEGER" />
     <result column="userName" property="username" jdbcType="VARCHAR" />
-    <result column="password" property="password" jdbcType="VARCHAR" />
-    <result column="role" property="role" jdbcType="INTEGER" />
+    <result column="sex" property="sex" jdbcType="VARCHAR" />
+    <result column="birthYear" property="birthyear" jdbcType="DATE" />
+    <result column="grade" property="grade" jdbcType="DATE" />
+    <result column="collegeID" property="collegeid" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -66,15 +68,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    userID, userName, password, role
+    userID, userName, sex, birthYear, grade, collegeID
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.demo.po.UserloginExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.demo.po.StudentExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from userlogin
+    from student
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -85,27 +87,29 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from userlogin
+    from student
     where userID = #{userid,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from userlogin
+    delete from student
     where userID = #{userid,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.example.demo.po.UserloginExample" >
-    delete from userlogin
+  <delete id="deleteByExample" parameterType="com.example.demo.po.StudentExample" >
+    delete from student
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.example.demo.po.Userlogin" >
-    insert into userlogin (userID, userName, password, 
-      role)
-    values (#{userid,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{role,jdbcType=INTEGER})
+  <insert id="insert" parameterType="com.example.demo.po.Student" >
+    insert into student (userID, userName, sex, 
+      birthYear, grade, collegeID
+      )
+    values (#{userid,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, 
+      #{birthyear,jdbcType=DATE}, #{grade,jdbcType=DATE}, #{collegeid,jdbcType=INTEGER}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.example.demo.po.Userlogin" >
-    insert into userlogin
+  <insert id="insertSelective" parameterType="com.example.demo.po.Student" >
+    insert into student
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="userid != null" >
         userID,
@@ -113,11 +117,17 @@
       <if test="username != null" >
         userName,
       </if>
-      <if test="password != null" >
-        password,
+      <if test="sex != null" >
+        sex,
       </if>
-      <if test="role != null" >
-        role,
+      <if test="birthyear != null" >
+        birthYear,
+      </if>
+      <if test="grade != null" >
+        grade,
+      </if>
+      <if test="collegeid != null" >
+        collegeID,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -127,22 +137,28 @@
       <if test="username != null" >
         #{username,jdbcType=VARCHAR},
       </if>
-      <if test="password != null" >
-        #{password,jdbcType=VARCHAR},
+      <if test="sex != null" >
+        #{sex,jdbcType=VARCHAR},
       </if>
-      <if test="role != null" >
-        #{role,jdbcType=INTEGER},
+      <if test="birthyear != null" >
+        #{birthyear,jdbcType=DATE},
+      </if>
+      <if test="grade != null" >
+        #{grade,jdbcType=DATE},
+      </if>
+      <if test="collegeid != null" >
+        #{collegeid,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.example.demo.po.UserloginExample" resultType="java.lang.Integer" >
-    select count(*) from userlogin
+  <select id="countByExample" parameterType="com.example.demo.po.StudentExample" resultType="java.lang.Integer" >
+    select count(*) from student
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update userlogin
+    update student
     <set >
       <if test="record.userid != null" >
         userID = #{record.userid,jdbcType=INTEGER},
@@ -150,11 +166,17 @@
       <if test="record.username != null" >
         userName = #{record.username,jdbcType=VARCHAR},
       </if>
-      <if test="record.password != null" >
-        password = #{record.password,jdbcType=VARCHAR},
+      <if test="record.sex != null" >
+        sex = #{record.sex,jdbcType=VARCHAR},
       </if>
-      <if test="record.role != null" >
-        role = #{record.role,jdbcType=INTEGER},
+      <if test="record.birthyear != null" >
+        birthYear = #{record.birthyear,jdbcType=DATE},
+      </if>
+      <if test="record.grade != null" >
+        grade = #{record.grade,jdbcType=DATE},
+      </if>
+      <if test="record.collegeid != null" >
+        collegeID = #{record.collegeid,jdbcType=INTEGER},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -162,39 +184,45 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update userlogin
+    update student
     set userID = #{record.userid,jdbcType=INTEGER},
       userName = #{record.username,jdbcType=VARCHAR},
-      password = #{record.password,jdbcType=VARCHAR},
-      role = #{record.role,jdbcType=INTEGER}
+      sex = #{record.sex,jdbcType=VARCHAR},
+      birthYear = #{record.birthyear,jdbcType=DATE},
+      grade = #{record.grade,jdbcType=DATE},
+      collegeID = #{record.collegeid,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.po.Userlogin" >
-    update userlogin
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.po.Student" >
+    update student
     <set >
       <if test="username != null" >
         userName = #{username,jdbcType=VARCHAR},
       </if>
-      <if test="password != null" >
-        password = #{password,jdbcType=VARCHAR},
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=VARCHAR},
       </if>
-      <if test="role != null" >
-        role = #{role,jdbcType=INTEGER},
+      <if test="birthyear != null" >
+        birthYear = #{birthyear,jdbcType=DATE},
+      </if>
+      <if test="grade != null" >
+        grade = #{grade,jdbcType=DATE},
+      </if>
+      <if test="collegeid != null" >
+        collegeID = #{collegeid,jdbcType=INTEGER},
       </if>
     </set>
     where userID = #{userid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.example.demo.po.Userlogin" >
-    update userlogin
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.po.Student" >
+    update student
     set userName = #{username,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
-      role = #{role,jdbcType=INTEGER}
+      sex = #{sex,jdbcType=VARCHAR},
+      birthYear = #{birthyear,jdbcType=DATE},
+      grade = #{grade,jdbcType=DATE},
+      collegeID = #{collegeid,jdbcType=INTEGER}
     where userID = #{userid,jdbcType=INTEGER}
   </update>
-  <insert id="regist" parameterType="com.example.demo.po.Userlogin">
-    insert into userlogin (userName,password)
-    values (#{username},#{password})
-  </insert>
 </mapper>

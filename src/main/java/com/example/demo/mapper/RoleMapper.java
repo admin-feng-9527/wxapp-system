@@ -1,4 +1,4 @@
-package com.example.demo.dao;
+package com.example.demo.mapper;
 
 
 import com.example.demo.po.Role;
@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-public interface RoleDao {
+public interface RoleMapper {
     int countByExample(RoleExample example);
 
     int deleteByExample(RoleExample example);

@@ -1,4 +1,4 @@
-package com.example.demo.dao;
+package com.example.demo.mapper;
 
 
 import com.example.demo.po.Teacher;
@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-public interface TeacherDao {
+public interface TeacherMapper {
     int countByExample(TeacherExample example);
 
     int deleteByExample(TeacherExample example);

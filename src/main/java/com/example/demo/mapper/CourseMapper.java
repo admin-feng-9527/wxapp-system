@@ -1,13 +1,13 @@
-package com.example.demo.dao;
+package com.example.demo.mapper;
+
 
 import com.example.demo.po.Course;
 import com.example.demo.po.CourseExample;
 import org.apache.ibatis.annotations.Param;
 
-
 import java.util.List;
 
-public interface CourseDao {
+public interface CourseMapper {
     int countByExample(CourseExample example);
 
     int deleteByExample(CourseExample example);

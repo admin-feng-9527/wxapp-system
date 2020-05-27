@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.example.demo.dao.CollegeDao" >
-  <resultMap id="BaseResultMap" type="com.example.demo.po.College" >
-    <id column="collegeID" property="collegeid" jdbcType="INTEGER" />
-    <result column="collegeName" property="collegename" jdbcType="VARCHAR" />
+<mapper namespace="com.example.demo.mapper.RoleMapper" >
+  <resultMap id="BaseResultMap" type="com.example.demo.po.Role" >
+    <id column="roleID" property="roleid" jdbcType="INTEGER" />
+    <result column="roleName" property="rolename" jdbcType="VARCHAR" />
+    <result column="permissions" property="permissions" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -64,15 +65,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    collegeID, collegeName
+    roleID, roleName, permissions
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.demo.po.CollegeExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.demo.po.RoleExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from college
+    from role
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -83,56 +84,67 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from college
-    where collegeID = #{collegeid,jdbcType=INTEGER}
+    from role
+    where roleID = #{roleid,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from college
-    where collegeID = #{collegeid,jdbcType=INTEGER}
+    delete from role
+    where roleID = #{roleid,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.example.demo.po.CollegeExample" >
-    delete from college
+  <delete id="deleteByExample" parameterType="com.example.demo.po.RoleExample" >
+    delete from role
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.example.demo.po.College" >
-    insert into college (collegeID, collegeName)
-    values (#{collegeid,jdbcType=INTEGER}, #{collegename,jdbcType=VARCHAR})
+  <insert id="insert" parameterType="com.example.demo.po.Role" >
+    insert into role (roleID, roleName, permissions
+      )
+    values (#{roleid,jdbcType=INTEGER}, #{rolename,jdbcType=VARCHAR}, #{permissions,jdbcType=VARCHAR}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.example.demo.po.College" >
-    insert into college
+  <insert id="insertSelective" parameterType="com.example.demo.po.Role" >
+    insert into role
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="collegeid != null" >
-        collegeID,
+      <if test="roleid != null" >
+        roleID,
       </if>
-      <if test="collegename != null" >
-        collegeName,
+      <if test="rolename != null" >
+        roleName,
+      </if>
+      <if test="permissions != null" >
+        permissions,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="collegeid != null" >
-        #{collegeid,jdbcType=INTEGER},
+      <if test="roleid != null" >
+        #{roleid,jdbcType=INTEGER},
       </if>
-      <if test="collegename != null" >
-        #{collegename,jdbcType=VARCHAR},
+      <if test="rolename != null" >
+        #{rolename,jdbcType=VARCHAR},
+      </if>
+      <if test="permissions != null" >
+        #{permissions,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.example.demo.po.CollegeExample" resultType="java.lang.Integer" >
-    select count(*) from college
+  <select id="countByExample" parameterType="com.example.demo.po.RoleExample" resultType="java.lang.Integer" >
+    select count(*) from role
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update college
+    update role
     <set >
-      <if test="record.collegeid != null" >
-        collegeID = #{record.collegeid,jdbcType=INTEGER},
+      <if test="record.roleid != null" >
+        roleID = #{record.roleid,jdbcType=INTEGER},
       </if>
-      <if test="record.collegename != null" >
-        collegeName = #{record.collegename,jdbcType=VARCHAR},
+      <if test="record.rolename != null" >
+        roleName = #{record.rolename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.permissions != null" >
+        permissions = #{record.permissions,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -140,25 +152,30 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update college
-    set collegeID = #{record.collegeid,jdbcType=INTEGER},
-      collegeName = #{record.collegename,jdbcType=VARCHAR}
+    update role
+    set roleID = #{record.roleid,jdbcType=INTEGER},
+      roleName = #{record.rolename,jdbcType=VARCHAR},
+      permissions = #{record.permissions,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.po.College" >
-    update college
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.po.Role" >
+    update role
     <set >
-      <if test="collegename != null" >
-        collegeName = #{collegename,jdbcType=VARCHAR},
+      <if test="rolename != null" >
+        roleName = #{rolename,jdbcType=VARCHAR},
+      </if>
+      <if test="permissions != null" >
+        permissions = #{permissions,jdbcType=VARCHAR},
       </if>
     </set>
-    where collegeID = #{collegeid,jdbcType=INTEGER}
+    where roleID = #{roleid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.example.demo.po.College" >
-    update college
-    set collegeName = #{collegename,jdbcType=VARCHAR}
-    where collegeID = #{collegeid,jdbcType=INTEGER}
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.po.Role" >
+    update role
+    set roleName = #{rolename,jdbcType=VARCHAR},
+      permissions = #{permissions,jdbcType=VARCHAR}
+    where roleID = #{roleid,jdbcType=INTEGER}
   </update>
 </mapper>

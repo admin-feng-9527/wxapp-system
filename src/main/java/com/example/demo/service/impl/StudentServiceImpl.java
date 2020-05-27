@@ -1,9 +1,10 @@
 package com.example.demo.service.impl;
 
 
-import com.example.demo.dao.CollegeDao;
-import com.example.demo.dao.StudentDao;
-import com.example.demo.dao.StudentDaoCustom;
+
+import com.example.demo.mapper.CollegeMapper;
+import com.example.demo.mapper.StudentMapper;
+import com.example.demo.mapper.StudentMapperCustom;
 import com.example.demo.po.*;
 import com.example.demo.service.StudentService;
 import org.springframework.beans.BeanUtils;
@@ -21,22 +22,22 @@ public class StudentServiceImpl implements StudentService {
 
     //使用spring 自动注入
     @Autowired
-    private StudentDaoCustom studentDaoCustom;
+    private StudentMapperCustom studentMapperCustom;
 
     @Autowired
-    private StudentDao studentDao;
+    private StudentMapper studentMapper;
 
     @Autowired
-    private CollegeDao collegeDao;
+    private CollegeMapper collegeMapper;
 
     @Override
     public void updataById(Integer id, StudentCustom studentCustom) throws Exception {
-        studentDao.updateByPrimaryKey(studentCustom);
+        studentMapper.updateByPrimaryKey(studentCustom);
     }
 
     @Override
     public void removeById(Integer id) throws Exception {
-        studentDao.deleteByPrimaryKey(id);
+        studentMapper.deleteByPrimaryKey(id);
     }
 
     @Override
@@ -44,16 +45,16 @@ public class StudentServiceImpl implements StudentService {
         PagingVO pagingVO = new PagingVO();
         pagingVO.setToPageNo(toPageNo);
 
-        List<StudentCustom> list = studentDaoCustom.findByPaging(pagingVO);
+        List<StudentCustom> list = studentMapperCustom.findByPaging(pagingVO);
 
         return list;
     }
 
     @Override
     public Boolean save(StudentCustom studentCustoms) throws Exception {
-        Student stu = studentDao.selectByPrimaryKey(studentCustoms.getUserid());
+        Student stu = studentMapper.selectByPrimaryKey(studentCustoms.getUserid());
         if (stu == null) {
-            studentDao.insert(studentCustoms);
+            studentMapper.insert(studentCustoms);
             return true;
         }
 
@@ -69,13 +70,13 @@ public class StudentServiceImpl implements StudentService {
         StudentExample.Criteria criteria = studentExample.createCriteria();
         criteria.andUseridIsNotNull();
 
-        return studentDao.countByExample(studentExample);
+        return studentMapper.countByExample(studentExample);
     }
 
     @Override
     public StudentCustom findById(Integer id) throws Exception {
 
-        Student student  = studentDao.selectByPrimaryKey(id);
+        Student student  = studentMapper.selectByPrimaryKey(id);
         StudentCustom studentCustom = null;
         if (student != null) {
             studentCustom = new StudentCustom();
@@ -96,7 +97,7 @@ public class StudentServiceImpl implements StudentService {
 
         criteria.andUsernameLike("%" + name + "%");
 
-        List<Student> list = studentDao.selectByExample(studentExample);
+        List<Student> list = studentMapper.selectByExample(studentExample);
 
         List<StudentCustom> studentCustomList = null;
 
@@ -107,7 +108,7 @@ public class StudentServiceImpl implements StudentService {
                 //类拷贝
                 BeanUtils.copyProperties(s, studentCustom);
                 //获取课程名
-                College college = collegeDao.selectByPrimaryKey(s.getCollegeid());
+                College college = collegeMapper.selectByPrimaryKey(s.getCollegeid());
                 studentCustom.setcollegeName(college.getCollegename());
 
                 studentCustomList.add(studentCustom);
@@ -120,7 +121,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public StudentCustom findStudentAndSelectCourseListByName(String name) throws Exception {
 
-        StudentCustom studentCustom = studentDaoCustom.findStudentAndSelectCourseListById(Integer.parseInt(name));
+        StudentCustom studentCustom = studentMapperCustom.findStudentAndSelectCourseListById(Integer.parseInt(name));
 
         List<SelectedCourseCustom> list = studentCustom.getSelectedCourseList();
 
@@ -140,7 +141,7 @@ public class StudentServiceImpl implements StudentService {
 
         criteria.andUseridIsNotNull();
 
-        List<Student> list = studentDao.selectByExample(studentExample);
+        List<Student> list = studentMapper.selectByExample(studentExample);
         List<StudentCustom> studentCustomsList = null;
         if (list != null) {
             studentCustomsList = new ArrayList<StudentCustom>();

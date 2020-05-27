@@ -1,4 +1,5 @@
-package com.example.demo.dao;
+package com.example.demo.mapper;
+
 
 
 import com.example.demo.po.PagingVO;
@@ -6,7 +7,8 @@ import com.example.demo.po.StudentCustom;
 
 import java.util.List;
 
-public interface StudentDaoCustom {
+
+public interface StudentMapperCustom {
 
     //分页查询学生信息
     List<StudentCustom> findByPaging(PagingVO pagingVO) throws Exception;

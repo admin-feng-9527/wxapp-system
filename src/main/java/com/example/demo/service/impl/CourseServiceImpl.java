@@ -1,10 +1,11 @@
 package com.example.demo.service.impl;
 
 
-import com.example.demo.dao.CollegeDao;
-import com.example.demo.dao.CourseDao;
-import com.example.demo.dao.CourseDaoCustom;
-import com.example.demo.dao.SelectedcourseDao;
+
+import com.example.demo.mapper.CollegeMapper;
+import com.example.demo.mapper.CourseMapper;
+import com.example.demo.mapper.CourseMapperCustom;
+import com.example.demo.mapper.SelectedcourseMapper;
 import com.example.demo.po.*;
 import com.example.demo.service.CourseService;
 import org.springframework.beans.BeanUtils;
@@ -18,16 +19,16 @@ import java.util.List;
 public class CourseServiceImpl implements CourseService {
 
     @Autowired
-    private CourseDao courseDao;
+    private CourseMapper courseDao;
 
     @Autowired
-    private CourseDaoCustom courseDaoCustom;
+    private CourseMapperCustom courseDaoCustom;
 
     @Autowired
-    private CollegeDao collegeDao;
+    private CollegeMapper collegeDao;
 
     @Autowired
-    private SelectedcourseDao selectedcourseDao;
+    private SelectedcourseMapper selectedcourseDao;
 
     @Override
     public void updateById(Integer id, CourseCustom courseCustom) throws Exception {

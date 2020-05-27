@@ -1,4 +1,4 @@
-package com.example.demo.dao;
+package com.example.demo.mapper;
 
 
 import com.example.demo.po.Userlogin;
@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-public interface UserloginDao {
+public interface UserloginMapper {
     int countByExample(UserloginExample example);
 
     int deleteByExample(UserloginExample example);

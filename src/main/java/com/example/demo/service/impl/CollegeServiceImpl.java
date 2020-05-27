@@ -1,7 +1,8 @@
 package com.example.demo.service.impl;
 
 
-import com.example.demo.dao.CollegeDao;
+
+import com.example.demo.mapper.CollegeMapper;
 import com.example.demo.po.College;
 import com.example.demo.po.CollegeExample;
 import com.example.demo.service.CollegeService;
@@ -14,12 +15,12 @@ import java.util.List;
 public class CollegeServiceImpl implements CollegeService {
 
     @Autowired
-    private CollegeDao collegeDao;
+    private CollegeMapper collegeMapper;
     @Override
     public List<College> finAll() throws Exception {
         CollegeExample collegeExample = new CollegeExample();
         CollegeExample.Criteria criteria = collegeExample.createCriteria();
         criteria.andCollegeidIsNotNull();
-        return collegeDao.selectByExample(collegeExample);
+        return collegeMapper.selectByExample(collegeExample);
     }
 }

@@ -1,7 +1,8 @@
 package com.example.demo.service.impl;
 
 
-import com.example.demo.dao.UserloginDao;
+
+import com.example.demo.mapper.UserloginMapper;
 import com.example.demo.po.Userlogin;
 import com.example.demo.po.UserloginExample;
 import com.example.demo.service.UserloginService;
@@ -15,7 +16,7 @@ import java.util.List;
 public class UserloginServiceImpl implements UserloginService {
 
     @Autowired
-    private UserloginDao userloginDao;
+    private UserloginMapper userloginMapper;
 
 
     @Override
@@ -25,14 +26,14 @@ public class UserloginServiceImpl implements UserloginService {
         UserloginExample.Criteria criteria = userloginExample.createCriteria();
         criteria.andUsernameEqualTo(name);
 
-        List<Userlogin> list = userloginDao.selectByExample(userloginExample);
+        List<Userlogin> list = userloginMapper.selectByExample(userloginExample);
 
         return list.get(0);
     }
 
     @Override
     public void save(Userlogin userlogin) throws Exception {
-        userloginDao.insert(userlogin);
+        userloginMapper.insert(userlogin);
     }
 
     @Override
@@ -42,7 +43,7 @@ public class UserloginServiceImpl implements UserloginService {
         UserloginExample.Criteria criteria = userloginExample.createCriteria();
         criteria.andUsernameEqualTo(name);
 
-        userloginDao.deleteByExample(userloginExample);
+        userloginMapper.deleteByExample(userloginExample);
     }
 
 
@@ -53,12 +54,12 @@ public class UserloginServiceImpl implements UserloginService {
         UserloginExample.Criteria criteria = userloginExample.createCriteria();
         criteria.andUsernameEqualTo(name);
 
-        userloginDao.updateByExample(userlogin, userloginExample);
+        userloginMapper.updateByExample(userlogin, userloginExample);
     }
 
     @Override
     public void regist(Userlogin userlogin) {
-        userloginDao.regist(userlogin.getUsername(),userlogin.getPassword());
+        userloginMapper.regist(userlogin.getUsername(),userlogin.getPassword());
     }
 
 }

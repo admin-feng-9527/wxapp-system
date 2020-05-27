@@ -1,8 +1,9 @@
 package com.example.demo.service.impl;
 
 
-import com.example.demo.dao.SelectedcourseDao;
-import com.example.demo.dao.StudentDao;
+
+import com.example.demo.mapper.SelectedcourseMapper;
+import com.example.demo.mapper.StudentMapper;
 import com.example.demo.po.*;
 import com.example.demo.service.SelectedCourseService;
 import org.springframework.beans.BeanUtils;
@@ -16,10 +17,10 @@ import java.util.List;
 public class SelectedCourseServiceImpl implements SelectedCourseService {
 
     @Autowired
-    private SelectedcourseDao selectedcourseDao;
+    private SelectedcourseMapper selectedcourseMapper;
 
     @Autowired
-    private StudentDao studentDao;
+    private StudentMapper studentMapper;
 
 //    @Resource(name = "courseServiceImpl")
 //    private CourseService courseService;
@@ -32,7 +33,7 @@ public class SelectedCourseServiceImpl implements SelectedCourseService {
         SelectedcourseExample.Criteria criteria = example.createCriteria();
         criteria.andCourseidEqualTo(id);
 
-        List<Selectedcourse> list = selectedcourseDao.selectByExample(example);
+        List<Selectedcourse> list = selectedcourseMapper.selectByExample(example);
         List<SelectedCourseCustom> secList = new ArrayList<SelectedCourseCustom>();
         for (Selectedcourse s: list) {
             SelectedCourseCustom sec = new SelectedCourseCustom();
@@ -41,7 +42,7 @@ public class SelectedCourseServiceImpl implements SelectedCourseService {
             if (sec.getMark() != null) {
                 sec.setOver(true);
             }
-            Student student = studentDao.selectByPrimaryKey(sec.getStudentid());
+            Student student = studentMapper.selectByPrimaryKey(sec.getStudentid());
             StudentCustom studentCustom = new StudentCustom();
             BeanUtils.copyProperties(student, studentCustom);
 
@@ -65,7 +66,7 @@ public class SelectedCourseServiceImpl implements SelectedCourseService {
         SelectedcourseExample.Criteria criteria = example.createCriteria();
         criteria.andCourseidEqualTo(id);
 
-        return selectedcourseDao.countByExample(example);
+        return selectedcourseMapper.countByExample(example);
     }
 
     //查询指定学生成绩
@@ -78,14 +79,14 @@ public class SelectedCourseServiceImpl implements SelectedCourseService {
         criteria.andCourseidEqualTo(selectedCourseCustom.getCourseid());
         criteria.andStudentidEqualTo(selectedCourseCustom.getStudentid());
 
-        List<Selectedcourse> list = selectedcourseDao.selectByExample(example);
+        List<Selectedcourse> list = selectedcourseMapper.selectByExample(example);
 
 
         if (list.size() > 0) {
             SelectedCourseCustom sc = new SelectedCourseCustom();
             BeanUtils.copyProperties(list.get(0), sc);
 
-            Student student = studentDao.selectByPrimaryKey(selectedCourseCustom.getStudentid());
+            Student student = studentMapper.selectByPrimaryKey(selectedCourseCustom.getStudentid());
             StudentCustom studentCustom = new StudentCustom();
             BeanUtils.copyProperties(student, studentCustom);
 
@@ -105,13 +106,13 @@ public class SelectedCourseServiceImpl implements SelectedCourseService {
         criteria.andCourseidEqualTo(selectedCourseCustom.getCourseid());
         criteria.andStudentidEqualTo(selectedCourseCustom.getStudentid());
 
-        selectedcourseDao.updateByExample(selectedCourseCustom, example);
+        selectedcourseMapper.updateByExample(selectedCourseCustom, example);
 
     }
 
     @Override
     public void save(SelectedCourseCustom selectedCourseCustom) throws Exception {
-        selectedcourseDao.insert(selectedCourseCustom);
+        selectedcourseMapper.insert(selectedCourseCustom);
     }
 
     @Override
@@ -127,7 +128,7 @@ public class SelectedCourseServiceImpl implements SelectedCourseService {
         criteria.andCourseidEqualTo(selectedCourseCustom.getCourseid());
         criteria.andStudentidEqualTo(selectedCourseCustom.getStudentid());
 
-        selectedcourseDao.deleteByExample(example);
+        selectedcourseMapper.deleteByExample(example);
     }
 
 }

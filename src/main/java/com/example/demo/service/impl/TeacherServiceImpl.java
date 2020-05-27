@@ -1,10 +1,11 @@
 package com.example.demo.service.impl;
 
 
-import com.example.demo.dao.CollegeDao;
-import com.example.demo.dao.CourseDao;
-import com.example.demo.dao.TeacherDao;
-import com.example.demo.dao.TeacherDaoCustom;
+
+import com.example.demo.mapper.CollegeMapper;
+import com.example.demo.mapper.CourseMapper;
+import com.example.demo.mapper.TeacherMapper;
+import com.example.demo.mapper.TeacherMapperCustom;
 import com.example.demo.po.*;
 import com.example.demo.service.TeacherService;
 import org.springframework.beans.BeanUtils;
@@ -19,20 +20,20 @@ import java.util.List;
 public class TeacherServiceImpl implements TeacherService {
 
     @Autowired
-    private TeacherDao teacherDao;
+    private TeacherMapper teacherMapper;
 
     @Autowired
-    private TeacherDaoCustom teacherDaoCustom;
+    private TeacherMapperCustom teacherMapperCustom;
 
     @Autowired
-    private CollegeDao collegeDao;
+    private CollegeMapper collegeMapper;
 
     @Autowired
-    private CourseDao courseDao;
+    private CourseMapper courseMapper;
 
     @Override
     public void updateById(Integer id, TeacherCustom teacherCustom) throws Exception {
-        teacherDao.updateByPrimaryKey(teacherCustom);
+        teacherMapper.updateByPrimaryKey(teacherCustom);
     }
 
     @Override
@@ -47,7 +48,7 @@ public class TeacherServiceImpl implements TeacherService {
 ////            throw new CustomException("请先删除该名老师所教授的课程");
 ////        }
 
-        teacherDao.deleteByPrimaryKey(id);
+        teacherMapper.deleteByPrimaryKey(id);
     }
 
     @Override
@@ -55,7 +56,7 @@ public class TeacherServiceImpl implements TeacherService {
         PagingVO pagingVO = new PagingVO();
         pagingVO.setToPageNo(toPageNo);
 
-        List<TeacherCustom> list = teacherDaoCustom.findByPaging(pagingVO);
+        List<TeacherCustom> list = teacherMapperCustom.findByPaging(pagingVO);
 
         return list;
     }
@@ -63,9 +64,9 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public Boolean save(TeacherCustom teacherCustom) throws Exception {
 
-        Teacher tea = teacherDao.selectByPrimaryKey(teacherCustom.getUserid());
+        Teacher tea = teacherMapper.selectByPrimaryKey(teacherCustom.getUserid());
         if (tea == null) {
-            teacherDao.insert(teacherCustom);
+            teacherMapper.insert(teacherCustom);
             return true;
         }
         return false;
@@ -79,12 +80,12 @@ public class TeacherServiceImpl implements TeacherService {
         TeacherExample.Criteria criteria = teacherExample.createCriteria();
         criteria.andUseridIsNotNull();
 
-        return teacherDao.countByExample(teacherExample);
+        return teacherMapper.countByExample(teacherExample);
     }
 
     @Override
     public TeacherCustom findById(Integer id) throws Exception {
-        Teacher teacher = teacherDao.selectByPrimaryKey(id);
+        Teacher teacher = teacherMapper.selectByPrimaryKey(id);
         TeacherCustom teacherCustom = null;
         if (teacher != null) {
             teacherCustom = new TeacherCustom();
@@ -102,7 +103,7 @@ public class TeacherServiceImpl implements TeacherService {
 
         criteria.andUsernameLike("%" + name + "%");
 
-        List<Teacher> list = teacherDao.selectByExample(teacherExample);
+        List<Teacher> list = teacherMapper.selectByExample(teacherExample);
 
         List<TeacherCustom> teacherCustomList = null;
 
@@ -113,7 +114,7 @@ public class TeacherServiceImpl implements TeacherService {
                 //类拷贝
                 BeanUtils.copyProperties(t, teacherCustom);
                 //获取课程名
-                College college = collegeDao.selectByPrimaryKey(t.getCollegeid());
+                College college = collegeMapper.selectByPrimaryKey(t.getCollegeid());
                 teacherCustom.setcollegeName(college.getCollegename());
 
                 teacherCustomList.add(teacherCustom);
@@ -131,7 +132,7 @@ public class TeacherServiceImpl implements TeacherService {
 
         criteria.andUseridIsNotNull();
 
-        List<Teacher> list = teacherDao.selectByExample(teacherExample);
+        List<Teacher> list = teacherMapper.selectByExample(teacherExample);
         List<TeacherCustom> teacherCustomsList = null;
         if (list != null) {
             teacherCustomsList = new ArrayList<TeacherCustom>();

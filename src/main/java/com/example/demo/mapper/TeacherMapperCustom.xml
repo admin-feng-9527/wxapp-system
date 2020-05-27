@@ -4,7 +4,7 @@
 
 <!--teacherMapper-->
 
-<mapper namespace="com.example.demo.dao.TeacherDaoCustom">
+<mapper namespace="com.example.demo.mapper.TeacherMapperCustom">
     <select id="findByPaging" parameterType="com.example.demo.po.PagingVO" resultType="com.example.demo.po.TeacherCustom">
         select teacher.*, college.collegeName
         from teacher, college

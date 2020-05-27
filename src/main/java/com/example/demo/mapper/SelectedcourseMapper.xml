@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.example.demo.dao.SelectedcourseDao" >
+<mapper namespace="com.example.demo.mapper.SelectedcourseMapper" >
   <resultMap id="BaseResultMap" type="com.example.demo.po.Selectedcourse" >
     <result column="courseID" property="courseid" jdbcType="INTEGER" />
     <result column="studentID" property="studentid" jdbcType="INTEGER" />
